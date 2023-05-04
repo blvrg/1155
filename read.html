@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Read BRC-1155</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    * {font-family: 'VT323', monospace; font-size:1.25rem}
+    body, html {display: flex; align-items: center; justify-content: center; width:100%; height:100%; text-align:center}
+    #wrapper {width:500px}
+    h1 {font-size:2rem}
+    button {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        padding: .3rem !important;
+    }
+    button:hover {background: hotpink}
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <h1>Read BRC-1155</h1>
+    <div id="output"></div>
+    <textarea id="jsonInput" rows="10" cols="50"></textarea><br><br>
+    <button onclick="parseJson()">Read</button><br><br>
+  </div>
+  <script>
+  function parseJson() {
+    const jsonInput = document.getElementById("jsonInput").value;
+    let data = JSON.parse(jsonInput);
+    let output = "";
+    if (data.hasOwnProperty("base64")) {
+      output += '<img src="data:' + data.type + ';base64,' + data.base64 + '">';
+    }
+    for (let key in data) {
+      if (data.hasOwnProperty(key) && key !== "base64") {
+        output += "<p><strong>" + key.charAt(0).toUpperCase() + key.slice(1) + ":</strong> " + data[key] + "</p>";
+      }
+    }
+    document.getElementById("output").innerHTML = output;
+    }
+</script>
+</body>
+</html>
